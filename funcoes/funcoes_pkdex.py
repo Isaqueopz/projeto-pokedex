@@ -20,7 +20,8 @@ def pesquisar(nome_pokemon_ou_id):
                 'id': dados['id'],
                 'habilidade': [habilidade['ability']['name'] for habilidade in dados['abilities']],
                 'altura': dados['height'],
-                'peso': dados['weight']
+                'peso': dados['weight'],
+                'base_experience': dados['base_experience'],
             }
             return pokemon_info
         else:
@@ -62,3 +63,19 @@ def printar_primeiro_pokemon_ou_ultimo(posicao):
         except KeyError:
                 print("Nome ou ID inválido!")
     
+def batalha_pokemons(pokemon1, pokemon2):
+    info1 = pesquisar(pokemon1)
+    info2 = pesquisar(pokemon2)
+
+    if 'erro' in info1 or 'erro' in info2:
+        return "Erro ao buscar informações de um ou ambos os Pokémon."
+
+    base_experience_1 = info1.get('base_experience',0 )  
+    base_experience_2 = info2.get('base_experience',0)  
+
+    if base_experience_1 > base_experience_2:
+        print (f"{info1['nome']} venceu a batalha!")
+    elif base_experience_1 < base_experience_2:
+        print (f"{info2['nome']} venceu a batalha!")
+    else:
+        print("A batalha terminou em empate!")
